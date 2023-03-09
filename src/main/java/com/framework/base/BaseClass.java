@@ -11,17 +11,20 @@ public class BaseClass {
 
 	public WebDriver driver;
 	public WebDriverWait wait;
+	public ConfigReader configReader;
 	Actions actions;
 
 	public BaseClass(DriverFactory driverfactory) {
 		this.driver = driverfactory.getWebDriver();
 		this.wait = driverfactory.getWebDriverWait();
 		this.actions = driverfactory.getActionDriver();
+		this.configReader = ConfigReader.getInstance();
 
 	}
 
 	public void launchApplication() {
-		driver.get("https://www.amazon.in/");
+		String url = configReader.getProperty("appURL");
+		driver.get(url);
 	}
 
 	public void clickElement(By locator) {

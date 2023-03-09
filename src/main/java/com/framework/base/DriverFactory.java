@@ -14,16 +14,24 @@ public class DriverFactory {
 	public Actions actions;
 
 	public WebDriver getWebDriver() {
+		
+		String browserWindow = ConfigReader.getInstance().getProperty("browserWindow");
+		
 		if (driver == null) {
-			return driver = new ChromeDriver();
-		} else
-			return driver;
+			driver = new ChromeDriver();
+		} 
+		if(browserWindow.equals("Max")) {
+			driver.manage().window().maximize();
+		}
+		
+		return driver;
 	}
 
 	public WebDriverWait getWebDriverWait() {
-
+		int waitTime = ConfigReader.getInstance().getintProperty("waitTime");
+		
 		if (wait == null) {
-			return wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+			return wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
 		} else
 			return wait;
 	}
